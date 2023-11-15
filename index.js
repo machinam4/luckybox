@@ -58,6 +58,7 @@ server.listen(process.env.APP_PORT, () => {
         .catch((err) => console.log(err));
     // end mongoose connection
     console.log(`listening on *:${process.env.APP_PORT}`);
-    createBots();
-    botplay(io);
+    
 });
+createBots();
+botplay(io);
