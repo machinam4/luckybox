@@ -1,0 +1,32 @@
+{
+  "name": "lakibox-server",
+  "version": "1.0.0",
+  "description": "this is the server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "test"
+  },
+  "keywords": [
+    "lakibox"
+  ],
+  "author": "machina",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.0.1",
+    "random-number": "^0.0.9",
+    "socket.io": "^4.7.2",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.2.0"
+  }
+}
