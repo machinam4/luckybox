@@ -40,6 +40,8 @@ const onConnection = (socket) => {
 io.on("connection", onConnection);
 io.use(socketAuth);
 
+createBots();
+botplay(io);
 // Start the server
 server.listen(process.env.APP_PORT, () => {
     // mongoose connection
@@ -60,5 +62,3 @@ server.listen(process.env.APP_PORT, () => {
     console.log(`listening on *:${process.env.APP_PORT}`);
     
 });
-createBots();
-botplay(io);
