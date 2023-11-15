@@ -1,6 +1,6 @@
 const express = require('express');
 require("dotenv").config();
-const http = require('http');
+const { createServer } = require('node:http');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const bodyParser = require('body-parser');
@@ -11,8 +11,8 @@ const { connection } = require("./socket/handler");
 const socketAuth = require("./middleware/socketAuth");
 
 // create http server
-const server = http.createServer(app);
-
+const server = createServer(app);
+const io = socketIO(server);
 
 app.use(cors());
 // Configure body-parser
@@ -31,7 +31,7 @@ app.use("/api/v1/callback", mpesaRoutes);
 //   });
 
 // socketio initialization and connection check
-const io = socketIO(server);
+
 
 const onConnection = (socket) => {
   connection(io, socket);
@@ -58,7 +58,6 @@ server.listen(process.env.APP_PORT, () => {
         .catch((err) => console.log(err));
     // end mongoose connection
     console.log(`listening on *:${process.env.APP_PORT}`);
-    console.log(process.env.CLIENT_APP_URL);
     createBots();
     botplay(io);
 });

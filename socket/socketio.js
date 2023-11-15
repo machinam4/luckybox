@@ -1,12 +1,11 @@
 const { Server } = require("socket.io");
-require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const socketIO = (server) =>
   new Server(server, {
     cors: {
-      origin: process.env.CLIENT_APP_URL,
+      origin: ['http://localhost:3000', 'https://luckybox.evoton.co.ke'],
       //   methods: ["GET", "POST"],
       credentials: true,
     },
