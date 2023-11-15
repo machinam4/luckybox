@@ -5,7 +5,9 @@ const Box = require("./models/Box");
 
 exports.createBots = async () => {
     try {
-        if(Player.findOne({role:"bot"})){
+        console.log("creating bots");
+        await Player.findOne({role:"bot"}).then(async(bot)=>{
+            if(bot){
             return "ok"
         }
         for (let i = 0; i < 50; i++) {
@@ -18,7 +20,7 @@ exports.createBots = async () => {
             console.log(`Bot ${i + 1} created:`, winner);
         }
         console.log('Creation of bots completed.');
-        return "ok"
+        return "ok"})
     } catch (error) {
         console.error('Error creating bots:', error.message);
         throw new Error(error)
@@ -32,7 +34,7 @@ exports.botplay = async (io) => {
             if(!bot){
                 return
             }
-            console.log(bot._id)
+            console.log(bot)
         if (bot) {
             console.log('Random Bot Player:', bot);
             box = Math.floor(Math.random() * 6) + 1;
@@ -63,7 +65,7 @@ exports.botplay = async (io) => {
         
     } catch (error) {
         console.error('Error fetching bots:', error.message);
-        // throw new Error(error)
+        throw new Error(error)
     }
     const randomTimeInterval = Math.floor(Math.random() * (120000 - 10000 + 1)) + 10000;    // Random time interval between 1 to 2mins
         // const randomTimeInterval = Math.floor(Math.random() * 5000) + 1000;
