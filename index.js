@@ -1,6 +1,6 @@
 const express = require('express');
 require("dotenv").config();
-const { createServer } = require('node:http');
+const http = require('http');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ const { connection } = require("./socket/handler");
 const socketAuth = require("./middleware/socketAuth");
 
 // create http server
-const server = createServer(app);
+const server = http.createServer(app);
 
 
 app.use(cors());
