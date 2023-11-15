@@ -30,15 +30,12 @@ exports.createBots = async () => {
 exports.botplay = async (io) => {
     try {
         const skipR = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
-        await Player.findOne({ role: "bot" }).skip(skipR).then(async (bot)=>{
-            if(!bot){
-                return
-            }
+        const bot = await Player.findOne({ role: "bot" }).skip(skipR)
             console.log(bot)
         if (bot) {
             console.log('Random Bot Player:', bot);
             box = Math.floor(Math.random() * 6) + 1;
-            await getBoxes(box).then(async (boxes) => {
+            return await getBoxes(box).then(async (boxes) => {
                 betStatus = "lose"
                 if (Object.values(boxes)[box - 1] != 0) {
                     betStatus = "win"
@@ -54,17 +51,15 @@ exports.botplay = async (io) => {
                 })
                 await winner.save()            
                 // Emit the random winner
-                io.sockets.emit('bet_winner', winner);
+                return io.sockets.emit('bet_winner', winner);
             })
         } else {
             return "ok"
-        }
-        });
-        
+        }      
     
         
     } catch (error) {
-        console.error('Error fetching bots:', error.message);
+        console.error('Error creating bots:', error.message);
         throw new Error(error)
     }
     const randomTimeInterval = Math.floor(Math.random() * (120000 - 10000 + 1)) + 10000;    // Random time interval between 1 to 2mins

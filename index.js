@@ -41,7 +41,7 @@ io.on("connection", onConnection);
 io.use(socketAuth);
 
 // Start the server
-server.listen(process.env.APP_PORT, async () => {
+server.listen(process.env.APP_PORT, () => {
     // mongoose connection
     mongoose
         .connect(
@@ -58,6 +58,7 @@ server.listen(process.env.APP_PORT, async () => {
         .catch((err) => console.log(err));
     // end mongoose connection
     console.log(`listening on *:${process.env.APP_PORT}`);
+    console.log(process.env.CLIENT_APP_URL);
     createBots();
-    botplay(io)
+    botplay(io);
 });
