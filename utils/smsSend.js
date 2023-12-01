@@ -13,7 +13,7 @@ MsgSendHPK = async (msg, phone) => {
     });
 };
 
-const MsgSend = async (msg, phone) => {
+const MsgSend_PATASMS = async (msg, phone) => {
   let smssent = "";
   const data =
     process.env.PATASMS_USERNAME + ":" + process.env.PATASMS_PASSWORD;
@@ -33,6 +33,18 @@ const MsgSend = async (msg, phone) => {
         call_back: "",
       })
     )
+    .then((response) => {
+      // console.log(response);
+    });
+  return "OK";
+};
+const MsgSend = async (msg, phone) => {
+  let smssent = "";
+  const data =
+    process.env.PATASMS_USERNAME + ":" + process.env.PATASMS_PASSWORD;
+
+  const tokendata = Buffer.from(data).toString("base64");
+  smssent = await unirest("GET", `https://smsportal.emartmobileke.com/SMSApi/send?userid=emartmobile&password=xC8Dmxw9&sendMethod=quick&mobile=${phone}&msg=${msg}&senderid=EMARTMOBILE&msgType=text&duplicatecheck=true&output=json`)
     .then((response) => {
       // console.log(response);
     });
