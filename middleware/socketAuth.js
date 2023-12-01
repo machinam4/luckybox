@@ -25,6 +25,7 @@ module.exports = async (socket, next) => {
     return next();
   }
   // check if iser in db
+  console.log("token", decodedToken)
   const user = await Player.findById(decodedToken.userId).populate([
     "account",
     "bets",

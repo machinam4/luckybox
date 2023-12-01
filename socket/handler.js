@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const connection = async (io, socket) => {
   // on connection function
   const onlineUsers = socket.conn.server.clientsCount;
-  console.log(`⚡: ${socket.id} user connected`);
+  
   socket.emit("users_online", onlineUsers);
   socket.on("disconnection", () => {
     socket.emit("users_onlne", onlineUsers);

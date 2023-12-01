@@ -1,5 +1,6 @@
 const Box = require("../models/Box");
 const Player = require("../models/Player");
+const { socketManager } = require("../socket/socketio");
 const { getBoxes } = require("../utils/gamePlay");
 const { betWin, betlose } = require("./TransactionController");
 
@@ -14,6 +15,7 @@ exports.placeBet = async (box, player) => {
                 message: "Insufficient funds on the account",
             };
         }
+        socketManager.io.emit("test", "this is test")
         
         account.balance = account.balance - parseInt(amount)        
         account.save()

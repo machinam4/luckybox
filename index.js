@@ -1,18 +1,19 @@
-const express = require('express');
+// const express = require('express');
 require("dotenv").config();
-const { createServer } = require('node:http');
+// const { createServer } = require('node:http');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const { Server } = require('socket.io');
-const app = express();
+// const app = express();
 const { socketIO} = require("./socket/socketio");
 const { connection } = require("./socket/handler");
 const socketAuth = require("./middleware/socketAuth");
-
+const {app,server, socketManager} = require('./socket/socketio');
 // create http server
-const server = createServer(app);
-const io = socketIO(server);
+// const server = createServer(app);
+// const io = socketIO(server);
+// const socketManager = new SocketManager(server)
 
 app.use(cors());
 // Configure body-parser
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 const userRoutes = require('./routes/userRoutes');
 const mpesaRoutes = require('./routes/mpesaRoutes');
 const { createBots, botplay } = require('./populateBots');
+
 app.use('/api/user', userRoutes);
 app.use("/api/v1/callback", mpesaRoutes);
 
@@ -34,14 +36,17 @@ app.use("/api/v1/callback", mpesaRoutes);
 
 
 const onConnection = (socket) => {
-  connection(io, socket);
+  connection(socketManager.io, socket);
 };
+socketManager.use(socketAuth);
+// Apply middleware to the io instance
+socketManager.applyMiddleware();
 
-io.on("connection", onConnection);
-io.use(socketAuth);
+socketManager.io.on("connection", onConnection);
+// io.use(socketAuth);
 
 createBots();
-botplay(io);
+botplay(socketManager.io);
 // Start the server
 server.listen(process.env.APP_PORT, () => {
     // mongoose connection
