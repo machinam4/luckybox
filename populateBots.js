@@ -51,6 +51,7 @@ exports.botplay = async (io) => {
                     // Emit the random winner
                     io.sockets.emit('bet_winner', winner);
                 }
+                io.emit('box_histories', boxes)
 
                 await winner.save()
 

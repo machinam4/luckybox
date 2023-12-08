@@ -5,6 +5,7 @@ const { MsgSend } = require("../utils/smsSend");
 const { placeBet } = require('./BetsController');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Box = require('../models/Box');
 
 
 
@@ -92,6 +93,7 @@ exports.loginPlayer = async (req, res) => {
     tokenValidity: 24000,
   });
 },
+
 exports.playerBet = async (req, res) => {
   try {
     const { choice, phoneNumber } = req.body;
@@ -137,6 +139,9 @@ exports.playerBet = async (req, res) => {
   }
 };
 
+exports.getboxes = async (req, res)=>{
+  return await Box.find().select('boxes')
+}
 
 // handle Mobile Origin SMS
 exports.handleMOSms = async (req, res) => {

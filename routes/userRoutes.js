@@ -14,6 +14,8 @@ router.post('/registerPlayer', PlayerController.registerPlayer);
 router.post('/loginPlayer', PlayerController.loginPlayer);
 router.post('/handleMOSms', PlayerController.handleMOSms);
 router.post('/playerBet', PlayerController.playerBet);
+
+ router.post('/get_boxes', PlayerController.getboxes);
  
 router.post('/registerUser', UserController.registerUser);
 

@@ -76,6 +76,7 @@ exports.placeBet = async (box, player) => {
                 account: account,
                 player:player
             })
+            socketManager.io.emit('box_histories', boxes)
             return  {
                 status: "success",
                 boxes: boxes,
